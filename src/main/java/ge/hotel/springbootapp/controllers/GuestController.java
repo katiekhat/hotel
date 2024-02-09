@@ -16,6 +16,9 @@ public class GuestController {
 
     @PostMapping("/add")
     public ResponseEntity<Guest> addGuest(@RequestBody Guest guest) {
+        if (guest.getFirstName() == null || guest.getLastName() == null) {
+            throw new IllegalArgumentException("First name and last name are required");
+        }
         Guest addedGuest = guestService.addGuest(guest);
         return new ResponseEntity<>(addedGuest, HttpStatus.CREATED);
     }
